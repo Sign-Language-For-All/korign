@@ -1,12 +1,13 @@
 let handpose;
 let video;
 let predictions = [];
+let canvas;
 
 function setup() {
-  createCanvas(640, 480);
+  canvas = createCanvas(640, 480);
   video = createCapture(VIDEO);
   video.size(width, height);
-
+  
   handpose = ml5.handpose(video, modelReady);
 
   // This sets up an event that fills the global variable "predictions"
@@ -35,7 +36,7 @@ function draw() {
   image(video, 0, 0);
   // We can call both functions to draw all keypoints and the skeletons
   drawKeypoints();
-
+  // saveCanvas(canvas, 'myCanvas', 'jpg');
   // console.log(predictions);
 }
 
