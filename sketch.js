@@ -44,11 +44,53 @@ function draw() {
 function drawKeypoints() {
   for (let i = 0; i < predictions.length; i += 1) {
     const prediction = predictions[i];
-    for (let j = 0; j < prediction.landmarks.length; j += 1) {
-      const keypoint = prediction.landmarks[j];
-      fill(0, 255, 0);
+
+    for (let j=0; j< prediction.annotations.thumb.length; j++) {
+      const keypoint = prediction.annotations.thumb[j];
+      fill(0, 128, 255);
       noStroke();
       ellipse(keypoint[0], keypoint[1], 10, 10);
     }
+
+    for (let j=0; j< prediction.annotations.indexFinger.length; j++) {
+      const keypoint = prediction.annotations.indexFinger[j];
+      fill(0, 0, 255);
+      noStroke();
+      ellipse(keypoint[0], keypoint[1], 10, 10);
+    }
+
+    for (let j=0; j< prediction.annotations.middleFinger.length; j++) {
+      const keypoint = prediction.annotations.middleFinger[j];
+      fill(127, 0, 255);
+      noStroke();
+      ellipse(keypoint[0], keypoint[1], 10, 10);
+    }
+
+    for (let j=0; j< prediction.annotations.ringFinger.length; j++) {
+      const keypoint = prediction.annotations.ringFinger[j];
+      fill(255, 0, 255);
+      noStroke();
+      ellipse(keypoint[0], keypoint[1], 10, 10);
+    }
+
+    for (let j=0; j< prediction.annotations.pinky.length; j++) {
+      const keypoint = prediction.annotations.pinky[j];
+      fill(0, 255, 255);
+      noStroke();
+      ellipse(keypoint[0], keypoint[1], 10, 10);
+    }
+
+    for (let j=0; j< prediction.annotations.thumb.palmBase; j++) {
+      const keypoint = prediction.annotations.thumb[j];
+      fill(255, 0, 127);
+      noStroke();
+      ellipse(keypoint[0], keypoint[1], 10, 10);
+    }
+    // for (let j = 0; j < prediction.landmarks.length; j += 1) {
+    //   const keypoint = prediction.landmarks[j];
+    //   fill(0, 255, 0);
+    //   noStroke();
+    //   ellipse(keypoint[0], keypoint[1], 10, 10);
+    // }
   }
 }
