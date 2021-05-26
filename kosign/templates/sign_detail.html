@@ -1,0 +1,36 @@
+
+{% if username%}
+<li><a href="/index?username={{ username }}"> 메인 페이지 돌아가기</a></li>
+{% endif %}
+
+
+<h1>점수 조회</h1>
+{% if username and sec%}
+<div>{{username}} 님, {{sec}} 초 걸리셨습니다. 수고하셨습니다!</div>
+{% endif %}
+
+
+<p>자음연습</p>
+{% if ja_userDurationList%}
+<ul>
+{% for time,name in ja_userDurationList %}
+    <li>{{time}}, {{name}}</li>
+    <br>
+{% endfor %}
+</ul>
+{% else %}
+<p>아직 연습한 데이터가 없습니다.</p>
+{% endif %}
+
+
+<p>모음연습</p>
+{% if mo_userDurationList%}
+<ul>
+{% for time,name in mo_userDurationList %}
+    <li>{{time}}, {{name}}</li>
+    <br>
+{% endfor %}
+</ul>
+{% else %}
+<p>아직 연습한 데이터가 없습니다.</p>
+{% endif %}

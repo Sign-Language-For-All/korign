@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Flask Index</title>
+</head>
+<body>
+
+<h1>인공지능 수어 교육 시스템</h1>
+
+
+{% if username %}
+    <p>사용자 이름: {{ username }}</p>
+{% endif %}
+
+{% if option2ref%}
+    <ul>
+    {% for option,ref in option2ref.items() %}
+        <li><a href="/korign/{{ ref }}/{{ username }}"> {{ option }}</a></li>
+        <br>
+    {% endfor %}
+    </ul>
+{% else %}
+    <p>no option</p>
+{% endif %}
+
+<li><a href="/sign_detail?username={{ username }}&mode=list"> 점수조회</a></li>
+
+
+</body>
+</html>
