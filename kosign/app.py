@@ -1,4 +1,4 @@
-from flask import Flask, render_template
+from flask import Flask, render_template, redirect, url_for
 
 from flask_migrate import Migrate
 from flask_sqlalchemy import SQLAlchemy
@@ -46,8 +46,14 @@ jaeum_prev2cur = {
     'ng':'j','j':'ch','ch':'k','k':'t','t':'p','p':'h'
 }
 moeum_prev2cur = {
-   "a":"ya","ya":"eo","eo":"yeo","yeo":"fin_mo"
+   "a":"ya","ya":"eo","eo":"yeo","yeo":"o","o":"yo","yo":"u",
+  "u":"yu","yu":"eu","eu":"i","i":"ui","ui":"ae","ae":"e","e":"oe","oe":"wi","wi":"yae",
+  "yae":"ye","ye":"fin_mo"
 }
+
+@app.route('/')
+def root():
+    return redirect(url_for("login"))
 
 @app.route('/info')
 def info():
@@ -130,21 +136,31 @@ def login():
     return render_template('login.html')
 
 
+@app.route('/update_score')
+def update_score():
+    sec = request.args.get('sec',0)
+    username = request.args.get('username',0)
+    mode = request.args.get("mode","list") ## update, list 
+    print('[update_score] sec',sec,"username",username,"mode",mode)
+
+    what_update = request.args.get("what_update","ja") ## ja, mo 
+    print('[sign_detail] what_update',what_update)
+    new_user = SignTypeUser(username=username,duration_time=int(sec),study_type=what_update)
+    db.session.add(new_user)
+    db.session.commit()
+
+    return redirect(url_for("sign_detail",username=username,sec=sec,mode=mode))
+
+# https://stackoverflow.com/questions/17057191/redirect-while-passing-arguments
+
+
 @app.route('/sign_detail')
 def sign_detail():
+
     sec = request.args.get('sec',0)
     username = request.args.get('username',0)
     mode = request.args.get("mode","list") ## update, list 
     print('[sign_detail] sec',sec,"username",username,"mode",mode)
-
-    if mode == 'update':
-        what_update = request.args.get("what_update","ja") ## ja, mo 
-        print('[sign_detail] what_update',what_update)
-        new_user = SignTypeUser(username=username,duration_time=int(sec),study_type=what_update)
-        db.session.add(new_user)
-        db.session.commit()
-
-    print("[sign_detail] username",username,"sec",sec)
 
     ja_users = SignTypeUser.query.filter(SignTypeUser.study_type=='ja')
     ja_userDurationList = [[user.username,user.duration_time] for user in ja_users]

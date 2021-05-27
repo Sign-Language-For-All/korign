@@ -85,11 +85,13 @@ var jauem_prev2cur = {
 };
 
 var moeum_prev2cur = {
-  "a":"ya","ya":"eo","eo":"yeo","yeo":"fin_mo"
+  "a":"ya","ya":"eo","eo":"yeo","yeo":"o","o":"yo","yo":"u",
+  "u":"yu","yu":"eu","eu":"i","i":"ui","ui":"ae","ae":"e","e":"oe","oe":"wi","wi":"yae",
+  "yae":"ye","ye":"fin_mo"
 };
 
 let scoreValue = 0;
-let timeleft = 10;
+let timeleft = 5;
 let timeTaken = 0;
 
 let downloadTimer = setInterval(function(){
@@ -101,23 +103,23 @@ let downloadTimer = setInterval(function(){
 
     if(cur.innerText in jauem_prev2cur){
       if (jauem_prev2cur[cur.innerText] == "fin_ja"){
-        location.href = 'http://127.0.0.1:5000/sign_detail'+"?sec="+(timeTaken+sec)+"&username="+username+"&mode=update"+"&what_update=ja"; 
+        location.href = 'http://127.0.0.1:5000/update_score'+"?sec="+(timeTaken+sec)+"&username="+username+"&mode=update"+"&what_update=ja"; 
       }else{
         location.href = 'http://127.0.0.1:5000/korign/'+jauem_prev2cur[cur.innerText]+"/"+username+"?sec="+(timeTaken+sec);
       }
     }else if(cur.innerText in moeum_prev2cur){
       if (moeum_prev2cur[cur.innerText] == "fin_mo"){
-        location.href = 'http://127.0.0.1:5000/sign_detail'+"?sec="+(timeTaken+sec)+"&username="+username+"&mode=update"+"&what_update=mo";
+        location.href = 'http://127.0.0.1:5000/update_score'+"?sec="+(timeTaken+sec)+"&username="+username+"&mode=update"+"&what_update=mo";
       }else{
         location.href = 'http://127.0.0.1:5000/korign/'+moeum_prev2cur[cur.innerText]+"/"+username+"?sec="+(timeTaken+sec);
       }
     }
-    timeleft = 10;
+    timeleft = 5;
     // window.location.href = '/korign/1/';
   } else {
     console.log(scoreValue);  
     if (scoreValue <= 0.7) {
-      timeleft = 10;
+      timeleft = 5;
       document.getElementById("countdown").innerHTML = timeleft + " seconds remaining";
       setInterval(downloadTimer, 1000);
     } else {
